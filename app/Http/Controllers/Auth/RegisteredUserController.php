@@ -9,8 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use DB;
+use Illuminate\Support\Facades\DB;
 
+use App\Http\Requests\RegisterRequest;
 use App\Models\Users\Subjects;
 use App\Models\Users\User;
 
@@ -35,15 +36,11 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
         DB::beginTransaction();
-        try{
-            $old_year = $request->old_year;
-            $old_month = $request->old_month;
-            $old_day = $request->old_day;
-            $data = $old_year . '-' . $old_month . '-' . $old_day;
-            $birth_day = date('Y-m-d', strtotime($data));
+        try {
+            $birth_day = sprintf('%04d-%02d-%02d', $request->old_year, $request->old_month, $request->old_day);
             $subjects = $request->subject;
 
             $user_get = User::create([
@@ -57,15 +54,17 @@ class RegisteredUserController extends Controller
                 'role' => $request->role,
                 'password' => bcrypt($request->password)
             ]);
-            if($request->role == 4){
+
+            if ($request->role == 4) {
                 $user = User::findOrFail($user_get->id);
                 $user->subjects()->attach($subjects);
             }
+
             DB::commit();
-            return view('auth.login.login');
-        }catch(\Exception $e){
+            return redirect()->route('auth.login.login')->with('success', '登録が完了しました');
+        } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('loginView');
+            return redirect()->route('loginView')->withErrors(['error' => '登録中にエラーが発生しました。']);
         }
     }
 }

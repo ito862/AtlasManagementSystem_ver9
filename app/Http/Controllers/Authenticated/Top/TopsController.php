@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Authenticated\Top;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class TopsController extends Controller
 {
-    public function show(){
+    public function show()
+    {
         return view('authenticated.top.top');
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect('/login');
     }
