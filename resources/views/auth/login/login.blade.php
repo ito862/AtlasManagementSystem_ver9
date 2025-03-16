@@ -1,4 +1,7 @@
 <x-guest-layout>
+  <!-- ロゴ -->
+  <img class="w-5 d-flex" style="align-items:center; justify-content:center;" src=" {{ asset('image/atlas-black.png') }}" alt="Atlas">
+
   <form action="{{ route('loginPost') }}" method="POST">
     <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center;">
       <div class="border vh-50 w-25">

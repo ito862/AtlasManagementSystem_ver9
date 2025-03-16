@@ -14,9 +14,9 @@ class Subjects extends Model
     protected $fillable = [
         'subject'
     ];
-
+    // リレーションの定義
     public function users()
     {
-        return $this->belongsToMany('App\Models\Users\User', 'subject_id', 'user_id')->withPivot('id'); // リレーションの定義
+        return $this->belongsToMany('App\Models\Users\User', 'subject_id', 'user_id')->withPivot('id');
     }
 }

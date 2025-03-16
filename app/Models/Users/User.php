@@ -69,10 +69,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Calendars\ReserveSettings', 'reserve_setting_users', 'user_id', 'reserve_setting_id')->withPivot('id');
     }
-
+    // リレーションの定義
     public function subjects()
     {
-        return $this->belongsToMany('App\Models\Users\Subjects', 'subject_users', 'user_id', 'subject_id')->withPivot('id'); // リレーションの定義
+        return $this->belongsToMany('App\Models\Users\Subjects', 'subject_users', 'user_id', 'subject_id')->withPivot('id');
     }
 
     // いいねしているかどうか
