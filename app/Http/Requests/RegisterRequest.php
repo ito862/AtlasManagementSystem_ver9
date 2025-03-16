@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'under_name' => 'required|string|max:10',
             'over_name_kana' => 'required|string|regex:/^[ァ-ヴー]+$/u|max:30',
             'under_name_kana' => 'required|string|regex:/^[ァ-ヴー]+$/u|max:30',
-            'mail_address' => 'required|email|unique:users,email|max:100',
+            'mail_address' => 'required|email|unique:users,mail_address|max:100',
             'sex' => 'required|in:1,2,3',
             'old_year' => 'required|min:2000|max:' . date('Y'),
             'old_month' => 'required|between:1,12',
@@ -77,7 +77,7 @@ class RegisterRequest extends FormRequest
             // メール
             'mail_address.required' => 'メールアドレスの入力は必須です。',
             'mail_address.email' => 'メールアドレスの形式で入力してください。',
-            'mail_address.unique:users,email' => 'このメールアドレス既に登録されています。',
+            'mail_address.unique:users,mail_address' => 'このメールアドレス既に登録されています。',
             'mail_address.max' => '100文字以内で入力してください。',
             // 性別
             'sex.required' => '性別の選択は必須です。',

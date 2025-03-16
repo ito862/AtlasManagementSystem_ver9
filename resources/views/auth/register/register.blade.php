@@ -1,6 +1,6 @@
 <x-guest-layout>
   @if ($errors->any())
-  <div class="text-red-500">
+  <div class="validate_error">
     <ul>
       @foreach ($errors->all() as $error)
       <li>{{ $error }}</li>
