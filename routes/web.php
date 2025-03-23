@@ -20,9 +20,12 @@ use App\Http\Controllers\Authenticated\Users\UsersController;
 |
 */
 
+
 require __DIR__ . '/auth.php';
-
-
+// ログインタイムアウト時の遷移
+Route::get('/login', function () {
+    return view('auth.login.login');
+})->name('login');
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -63,11 +66,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::namespace('Users')->group(function () {
             Route::get('show/users', [UsersController::class, 'showUsers'])->name('user.show');
             Route::get('user/profile/{id}', [UsersController::class, 'userProfile'])->name('user.profile');
+            Route::get('/user/search', [UsersController::class, 'userSearch'])->name('user.search');
             Route::post('user/profile/edit', [UsersController::class, 'userEdit'])->name('user.edit');
         });
     });
 });
-// ログインタイムアウト処理
-Route::get('/login', function () {
-    return view('auth.login.login');
-})->name('login');

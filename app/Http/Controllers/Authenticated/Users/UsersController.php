@@ -22,7 +22,7 @@ class UsersController extends Controller
         $updown = $request->updown;
         $gender = $request->sex;
         $role = $request->role;
-        $subjects = null; // ここで検索時の科目を受け取る
+        $subjects = $request->subject;
         $userFactory = new SearchResultFactories();
         $users = $userFactory->initializeUsers($keyword, $category, $updown, $gender, $role, $subjects);
         $subjects = Subjects::all();
@@ -42,25 +42,23 @@ class UsersController extends Controller
         $user->subjects()->sync($request->subjects);
         return redirect()->route('user.profile', ['id' => $request->user_id]);
     }
+
+
+
     // ユーザー検索
-    // 検索条件
-    // 名前、性別、役職、選択科目
-    // 並び替え条件：IDの昇降順、名前昇降順
     public function userSearch(Request $request)
     {
         // 検索フォームに入力された値を取得
+        // 名前orID
+        // 昇降順
         $keyword = $request->input('keyword');
         $sex = $request->input('sex');
         $role = $request->input('role');
-        $subject = $request->input('subject');
+        $subjects = $request->input('subject');
 
-        // テーブル結合してデータを取得
-        $query = User::select('users.*')
-            ->join('subject_user', 'users.id', '=', 'subject_user.user_id')
-            ->join('subjects', 'subject_user.subject_id', '=', 'subjects.id');
+        $query = User::query();
 
-
-        // 仮組名前は４種類あるので模索する over_name,under_name,over_name_kana,under_name_kanaの４種類
+        // over_name,under_name,over_name_kana,under_name_kanaの４種類
         if (!empty($keyword)) {
             $query->where(function ($q) use ($keyword) {
                 $q->where('over_name', 'like', '%' . $keyword . '%')
@@ -78,9 +76,10 @@ class UsersController extends Controller
             $query->where('role', '=', $role);
         }
 
-        // 複数の科目で検索した場合、あてはまる科目を一つでも選択しているユーザーはすべて表示させる
-        if (!empty($subject)) {
-            $query->whereIn('subject.subject', (array) $subject);
+        if (!empty($subjects)) {
+            $query->whereHas('subjects', function ($q) use ($subjects) {
+                $q->whereIn('subjects.id', $subjects);
+            });
         }
 
         // 結果を取得
