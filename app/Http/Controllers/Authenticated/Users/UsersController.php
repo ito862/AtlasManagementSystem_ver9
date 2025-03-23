@@ -60,26 +60,31 @@ class UsersController extends Controller
             ->join('subjects', 'subject_user.subject_id', '=', 'subjects.id');
 
 
-        // 仮組名前は４種類あるので模索する
+        // 仮組名前は４種類あるので模索する over_name,under_name,over_name_kana,under_name_kanaの４種類
         if (!empty($keyword)) {
-            $query->where('over_name', 'like', '%' . $keyword . '%')->get();
+            $query->where(function ($q) use ($keyword) {
+                $q->where('over_name', 'like', '%' . $keyword . '%')
+                    ->orWhere('under_name', 'like', '%' . $keyword . '%')
+                    ->orWhere('over_name_kana', 'like', '%' . $keyword . '%')
+                    ->orWhere('under_name_kana', 'like', '%' . $keyword . '%');
+            });
         }
 
         if (!empty($sex)) {
-            $query->where('sex', 'like', $sex);
+            $query->where('sex', '=', $sex);
         }
 
         if (!empty($role)) {
-            $query->where('role', 'like', $role);
+            $query->where('role', '=', $role);
         }
-        // subjectはID取得？
+
         // 複数の科目で検索した場合、あてはまる科目を一つでも選択しているユーザーはすべて表示させる
-        if ($request->filled('subject')) {
-            $query->where('subjects.subject', 'like', '%' . $request->subject . '%');
+        if (!empty($subject)) {
+            $query->whereIn('subject.subject', (array) $subject);
         }
 
         // 結果を取得
-        $users = $query->get();
+        $users = $query->distinct()->get();
 
         return view('/users/search', ['users' => $users]);
     }

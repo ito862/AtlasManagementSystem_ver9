@@ -24,11 +24,6 @@ require __DIR__ . '/auth.php';
 
 
 
-// ログインタイムアウト処理
-Route::get('/login', function () {
-    return view('auth.login.login');
-})->name('login');
-
 Route::group(['middleware' => 'auth'], function () {
 
     Route::namespace('Authenticated')->group(function () {
@@ -72,3 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 });
+// ログインタイムアウト処理
+Route::get('/login', function () {
+    return view('auth.login.login');
+})->name('login');
