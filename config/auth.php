@@ -114,4 +114,9 @@ return [
 
     'password_timeout' => 10800,
 
+    // リダイレクト先
+    'redirects' => [
+        'login' => '/login',
+    ],
+
 ];

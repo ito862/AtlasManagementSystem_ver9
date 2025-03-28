@@ -9,6 +9,7 @@ use App\Http\Controllers\Authenticated\Top\TopsController;
 use App\Http\Controllers\Authenticated\Users\UsersController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
