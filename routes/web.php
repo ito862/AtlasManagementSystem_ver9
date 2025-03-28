@@ -25,7 +25,7 @@ require __DIR__ . '/auth.php';
 // ログインタイムアウト時の遷移
 Route::get('/login', function () {
     return view('auth.login.login');
-})->name('login');
+})->name('loginView');
 
 Route::group(['middleware' => 'auth'], function () {
 

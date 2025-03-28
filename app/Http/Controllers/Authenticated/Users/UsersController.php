@@ -49,13 +49,10 @@ class UsersController extends Controller
     public function userSearch(Request $request)
     {
         // 検索フォームに入力された値を取得
-        // 名前orID
-        // 昇降順
         $keyword = $request->input('keyword');
         $sex = $request->input('sex');
         $role = $request->input('role');
-        $subjects = $request->input('subject');
-
+        $subject = $request->input('subject');
         $query = User::query();
 
         // over_name,under_name,over_name_kana,under_name_kanaの４種類
@@ -76,15 +73,15 @@ class UsersController extends Controller
             $query->where('role', '=', $role);
         }
 
-        if (!empty($subjects)) {
-            $query->whereHas('subjects', function ($q) use ($subjects) {
-                $q->whereIn('subjects.id', $subjects);
+        if (!empty($subject)) {
+            $query->whereHas('subjects', function ($q) use ($subject) {
+                $q->whereIn('subjects.id', $subject);
             });
         }
 
         // 結果を取得
         $users = $query->distinct()->get();
 
-        return view('/users/search', ['users' => $users]);
+        return view('authenticated.users.search', ['users' => $users]);
     }
 }
