@@ -42,6 +42,11 @@
       </div>
     </div>
     <div class="w-50 p-3">
+      @if ($errors->has('comment'))
+      <div class="text-red-500">
+        {{ $errors->first('comment') }}
+      </div>
+      @endif
       <div class="comment_container border m-5">
         <div class="comment_area p-3">
           <p class="m-0">コメントする</p>
