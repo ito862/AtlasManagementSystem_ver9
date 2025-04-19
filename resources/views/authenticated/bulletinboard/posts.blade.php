@@ -34,13 +34,51 @@
         </div>
         <input type="submit" name="like_posts" class="category_btn" value="いいねした投稿" form="postSearchRequest">
         <input type="submit" name="my_posts" class="category_btn" value="自分の投稿" form="postSearchRequest">
-        <ul>
-          @foreach($categories as $category)
-          <li class="main_categories" category_id="{{ $category->id }}"><span>{{ $category->main_category }}<span></li>
-          @endforeach
-        </ul>
+
+        <div class="">カテゴリー検索</div>
+        <div>
+          <!-- メインカテゴリーのドロップダウン -->
+          <select id="mainCategorySelect" class="form-control">
+            <option value="">-- メインカテゴリーを選択 --</option>
+            @foreach($categories as $mainCategory)
+            <option value="{{ $mainCategory->id }}">{{ $mainCategory->main_category }}</option>
+            @endforeach
+          </select>
+
+          <!-- サブカテゴリーリスト -->
+          <ul id="subCategoryList" class="mt-3">
+            @foreach($categories as $mainCategory)
+            @foreach($mainCategory->subCategories as $subCategory)
+            <li class="sub-category-item" data-main-id="{{ $mainCategory->id }}" style="display: none;">
+              <form method="GET" action="{{ route('post.show') }}">
+                <input type="hidden" name="category_word" value="{{ $subCategory->sub_category }}">
+                <button type="submit" class="btn btn-link p-0 m-0">{{ $subCategory->sub_category }}</button>
+              </form>
+            </li>
+            @endforeach
+            @endforeach
+          </ul>
+        </div>
+
       </div>
     </div>
     <form action="{{ route('post.show') }}" method="get" id="postSearchRequest"></form>
   </div>
+
+  <!-- ドロップダウン -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mainCategorySelect = document.getElementById('mainCategorySelect');
+      const subCategoryItems = document.querySelectorAll('.sub-category-item');
+
+      mainCategorySelect.addEventListener('change', function() {
+        const selectedMainId = this.value;
+
+        subCategoryItems.forEach(function(item) {
+          item.style.display = (item.dataset.mainId === selectedMainId) ? 'list-item' : 'none';
+        });
+      });
+    });
+  </script>
+
 </x-sidebar>

@@ -25,21 +25,40 @@ class PostsController extends Controller
         $like = new Like;
         $post_comment = new Post;
 
-        if (!empty($request->keyword)) {
+        if ($request->filled('keyword')) {
+            //サブカテゴリーと完全一致検索
+            $subCategory = SubCategory::where('sub_category', $request->keyword)->first();
+
+            if ($subCategory) {
+                $posts = $subCategory->posts()->with('user', 'postComments')->get();
+            } else {
+                $posts = Post::with('user', 'postComments')
+                    ->where('post_title', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('post', 'like', '%' . $request->keyword . '%')
+                    ->get();
+            }
+        } elseif ($request->filled('category_word')) {
+            //カテゴリークリック（サブカテゴリ名）
+            $subCategory = SubCategory::where('sub_category', $request->category_word)->first();
+
+            if ($subCategory) {
+                $posts = $subCategory->posts()->with('user', 'postComments')->get();
+            }
+        } elseif ($request->filled('like_posts')) {
+            //いいねした投稿
+            $likes = Auth::user()->likePostId()->pluck('like_post_id');
             $posts = Post::with('user', 'postComments')
-                ->where('post_title', 'like', '%' . $request->keyword . '%')
-                ->orWhere('post', 'like', '%' . $request->keyword . '%')->get();
-        } else if ($request->category_word) {
-            $sub_category = $request->category_word;
+                ->whereIn('id', $likes)
+                ->get();
+        } elseif ($request->filled('my_posts')) {
+            //自分の投稿
+            $posts = Post::with('user', 'postComments')
+                ->where('user_id', Auth::id())
+                ->get();
+        } else {
             $posts = Post::with('user', 'postComments')->get();
-        } else if ($request->like_posts) {
-            $likes = Auth::user()->likePostId()->get('like_post_id');
-            $posts = Post::with('user', 'postComments')
-                ->whereIn('id', $likes)->get();
-        } else if ($request->my_posts) {
-            $posts = Post::with('user', 'postComments')
-                ->where('user_id', Auth::id())->get();
         }
+
         return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment'));
     }
 
@@ -64,6 +83,11 @@ class PostsController extends Controller
             'post_title' => $request->post_title,
             'post' => $request->post_body
         ]);
+        // サブカテゴリーへ紐付け
+        if ($request->has('sub_category_id')) {
+            $post->subCategories()->attach($request->sub_category_id);
+        }
+
         return redirect()->route('post.show', ['post' => $post]);
     }
 
