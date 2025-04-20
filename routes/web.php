@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::namespace('Calendar')->group(function () {
             Route::namespace('General')->group(function () {
                 Route::get('calendar/{user_id}', [CalendarController::class, 'show'])->name('calendar.general.show');
+
+                Route::get('calendar/{date}/{part}', [CalendarController::class, 'reserveDetail'])
+                    ->name('reserve.detail');
+
                 Route::post('reserve/calendar', [CalendarController::class, 'reserve'])->name('reserveParts');
                 Route::post('delete/calendar', [CalendarController::class, 'delete'])->name('deleteParts');
             });
