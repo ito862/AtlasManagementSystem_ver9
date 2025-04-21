@@ -150,6 +150,46 @@ li {
   color: red;
 }
 
+/* アコーディオン */
+.accordion-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.accordion-title {
+  font-weight: bold;
+}
+
+/* 矢印：初期は下向き（右矢印を90度回転） */
+.arrow-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+  transform: rotate(90deg);
+  margin-right: 10px;
+}
+
+/* 開いたときは上向き（-90度） */
+.accordion-toggle.open .arrow-icon {
+  transform: rotate(-90deg);
+}
+
+.sub-category-list {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-category-list li {
+  border-bottom: 1px solid #ddd;
+  padding-left: 1rem;
+}
+
 /* 掲示板 詳細画面 */
 .contributor {
   font-size: 12px;

@@ -36,49 +36,45 @@
         <input type="submit" name="my_posts" class="category_btn" value="自分の投稿" form="postSearchRequest">
 
         <div class="">カテゴリー検索</div>
-        <div>
-          <!-- メインカテゴリーのドロップダウン -->
-          <select id="mainCategorySelect" class="form-control">
-            <option value="">-- メインカテゴリーを選択 --</option>
-            @foreach($categories as $mainCategory)
-            <option value="{{ $mainCategory->id }}">{{ $mainCategory->main_category }}</option>
-            @endforeach
-          </select>
-
-          <!-- サブカテゴリーリスト -->
-          <ul id="subCategoryList" class="mt-3">
-            @foreach($categories as $mainCategory)
-            @foreach($mainCategory->subCategories as $subCategory)
-            <li class="sub-category-item" data-main-id="{{ $mainCategory->id }}" style="display: none;">
-              <form method="GET" action="{{ route('post.show') }}">
-                <input type="hidden" name="category_word" value="{{ $subCategory->sub_category }}">
-                <button type="submit" class="btn btn-link p-0 m-0">{{ $subCategory->sub_category }}</button>
-              </form>
-            </li>
-            @endforeach
-            @endforeach
-          </ul>
-        </div>
-
+        <ul class="list-group">
+          @foreach($categories as $mainCategory)
+          <li class="list-group-item p-0 border-0 bg-transparent">
+            <div class="accordion-toggle" data-target="#sub-{{ $mainCategory->id }}">
+              <span class="accordion-title">{{ $mainCategory->main_category }}</span>
+              <span class="arrow-icon">&#8250;</span>
+            </div>
+            <ul class="sub-category-list" id="sub-{{ $mainCategory->id }}">
+              @foreach($mainCategory->subCategories as $subCategory)
+              <li class="list-group-item bg-transparent border-0 p-0 py-1">
+                <form method="GET" action="{{ route('post.show') }}">
+                  <input type="hidden" name="category_word" value="{{ $subCategory->sub_category }}">
+                  <button type="submit" class="btn btn-link p-0 m-0">{{ $subCategory->sub_category }}</button>
+                </form>
+              </li>
+              @endforeach
+            </ul>
+          </li>
+          @endforeach
+        </ul>
       </div>
+      <form action="{{ route('post.show') }}" method="get" id="postSearchRequest"></form>
     </div>
-    <form action="{{ route('post.show') }}" method="get" id="postSearchRequest"></form>
-  </div>
 
-  <!-- ドロップダウン -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const mainCategorySelect = document.getElementById('mainCategorySelect');
-      const subCategoryItems = document.querySelectorAll('.sub-category-item');
-
-      mainCategorySelect.addEventListener('change', function() {
-        const selectedMainId = this.value;
-
-        subCategoryItems.forEach(function(item) {
-          item.style.display = (item.dataset.mainId === selectedMainId) ? 'list-item' : 'none';
+    <!-- アコーディオン -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const toggles = document.querySelectorAll('.accordion-toggle');
+        toggles.forEach(toggle => {
+          toggle.addEventListener('click', function() {
+            const targetId = toggle.getAttribute('data-target');
+            const content = document.querySelector(targetId);
+            const isOpen = toggle.classList.toggle('open');
+            content.style.display = isOpen ? 'block' : 'none';
+          });
         });
       });
-    });
-  </script>
+    </script>
+
+
 
 </x-sidebar>
