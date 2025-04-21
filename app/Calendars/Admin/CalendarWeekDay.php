@@ -38,13 +38,16 @@ class CalendarWeekDay
 
     $html[] = '<div class="text-left">';
     if ($one_part) {
-      $html[] = '<p class="day_part m-0 pt-1">1部</p>';
+      $count = $one_part->users->count();
+      $html[] = '<p class="day_part m-0 pt-1"><a href="/calendar/1/' . $ymd . '">1部</a><span class="m1-1">' . $count . '</span></p>';
     }
     if ($two_part) {
-      $html[] = '<p class="day_part m-0 pt-1">2部</p>';
+      $count = $two_part->users->count();
+      $html[] = '<p class="day_part m-0 pt-1"><a href="/calendar/2/' . $ymd . '">2部</a><span class="m1-1">' . $count . '</span></p>';
     }
     if ($three_part) {
-      $html[] = '<p class="day_part m-0 pt-1">3部</p>';
+      $count = $three_part->users->count();
+      $html[] = '<p class="day_part m-0 pt-1"><a href="/calendar/3/' . $ymd . '">3部</a><span class="m1-1">' . $count . '</span></p>';
     }
     $html[] = '</div>';
 
