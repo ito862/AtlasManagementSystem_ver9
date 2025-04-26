@@ -4,7 +4,7 @@ namespace App\Calendars\General;
 
 use App\Models\Calendars\ReserveSettings;
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarWeekDay
 {
@@ -18,6 +18,11 @@ class CalendarWeekDay
   function getClassName()
   {
     return "day-" . strtolower($this->carbon->format("D"));
+  }
+
+  function isPast()
+  {
+    return $this->carbon->isBefore(Carbon::today());
   }
 
   function pastClassName()

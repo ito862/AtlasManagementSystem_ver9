@@ -86,7 +86,6 @@ class CalendarWeekDay
     return $three_part_frame;
   }
 
-  //
   function dayNumberAdjustment()
   {
     $html = [];
