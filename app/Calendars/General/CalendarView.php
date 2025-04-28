@@ -43,8 +43,6 @@ class CalendarView
       $days = $week->getDays();
 
       foreach ($days as $day) {
-        $startDay = $this->carbon->copy()->format("Y-m-01");
-        $toDay = $this->carbon->copy()->format("Y-m-d");
         $dayDate = new Carbon($day->everyDay());
         $isCurrentMonth = $dayDate->format('y-m') === $this->carbon->format('y-m');
         // 今日より後なら過去日とする

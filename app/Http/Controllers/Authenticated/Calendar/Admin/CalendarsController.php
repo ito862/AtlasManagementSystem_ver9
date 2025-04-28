@@ -10,7 +10,7 @@ use App\Models\Calendars\ReserveSettings;
 use App\Models\Calendars\Calendar;
 use App\Models\USers\User;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CalendarsController extends Controller
 {
@@ -20,10 +20,29 @@ class CalendarsController extends Controller
         return view('authenticated.calendar.admin.calendar', compact('calendar'));
     }
 
-    public function reserveDetail($date, $part)
+    public function reserveDetail($part, $date)
     {
-        $reservePersons = ReserveSettings::with('users')->where('setting_reserve', $date)->where('setting_part', $part)->get();
-        return view('authenticated.calendar.admin.reserve_detail', compact('reservePersons', 'date', 'part'));
+        // dd($part);
+        // dd($date);
+        $reserveSetting = ReserveSettings::whereDate('setting_reserve', $date)
+            ->where('setting_part', $part)
+            ->first();
+
+        if (!$reserveSetting) {
+            $users = collect();
+        } else {
+            $users = User::whereHas('reserveSettings', function ($q) use ($reserveSetting) {
+                $q->where('reserve_setting_id', $reserveSetting->id);
+            })->get();
+        }
+        // $users = User::whereHas('reserveSettings', function ($q) use ($part, $date) {
+        //     $q->whereDate('setting_reserve', $date)
+        //         ->where('setting_part', $part)
+        //         ->get();
+        // });
+        // dd($users);
+
+        return view('authenticated.calendar.admin.reserve_detail', compact('users', 'date', 'part'));
     }
 
     public function reserveSettings()
