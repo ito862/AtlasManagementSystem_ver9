@@ -22,8 +22,6 @@ class CalendarsController extends Controller
 
     public function reserveDetail($part, $date)
     {
-        // dd($part);
-        // dd($date);
         $reserveSetting = ReserveSettings::whereDate('setting_reserve', $date)
             ->where('setting_part', $part)
             ->first();
@@ -35,12 +33,6 @@ class CalendarsController extends Controller
                 $q->where('reserve_setting_id', $reserveSetting->id);
             })->get();
         }
-        // $users = User::whereHas('reserveSettings', function ($q) use ($part, $date) {
-        //     $q->whereDate('setting_reserve', $date)
-        //         ->where('setting_part', $part)
-        //         ->get();
-        // });
-        // dd($users);
 
         return view('authenticated.calendar.admin.reserve_detail', compact('users', 'date', 'part'));
     }
