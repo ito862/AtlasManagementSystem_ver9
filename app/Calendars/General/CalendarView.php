@@ -3,7 +3,7 @@
 namespace App\Calendars\General;
 
 use Carbon\Carbon;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarView
 {
@@ -63,8 +63,8 @@ class CalendarView
           $html[] = '<p class="text-center m-0" style="font-size:12px;">&nbsp;</p>';
         } else {
           if (in_array($day->everyDay(), $day->authReserveDay())) {
-            // 予約している場合
             $reservePart = $day->authReserveDate($day->everyDay())->first()->setting_part;
+            // 予約前の表示
             if ($reservePart == 1) {
               $reservePart = "リモ1部";
             } elseif ($reservePart == 2) {
@@ -75,7 +75,13 @@ class CalendarView
             if ($isPast) {
               $html[] = '<p class="text-center m-0" style="font-size:12px;">' . $reservePart . '</p>';
             } else {
-              $html[] = '<button type="submit" class="btn btn-danger p-0 w-75" name="delete_date" style="font-size:12px;" value="' . $day->authReserveDate($day->everyDay())->first()->setting_reserve . '">' . $reservePart . '</button>';
+              // 予約している時の表示
+              $settingDate = $day->authReserveDate($day->everyDay())->first()->setting_reserve;
+              $settingPart = $day->authReserveDate($day->everyDay())->first()->setting_part;
+
+              $html[] = '<button type="button" class="btn btn-danger p-0 w-75  js-modal-open" style="font-size:12px;"
+              data-reserve-date="' . $settingDate . '"
+              data-reserve-part="' . $settingPart . '">' . $reservePart . '</button>';
             }
             $html[] = '<input type="hidden" name="getPart[]" value="" form="reserveParts">';
           } else {

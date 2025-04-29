@@ -13,4 +13,29 @@
       </div>
     </div>
   </div>
+
+  <!-- モーダル -->
+  <div class="modal js-modal">
+    <div class="modal__bg js-modal-close">
+      <div class="modal__content">
+        <!-- 予約日・部・場所 -->
+        <h3>予約詳細</h3>
+        <p>
+          <span id="modal-date"></span>
+          <span id="modal-part"></span>
+          <!-- リモートしかないため現状固定 -->
+          <span> リモート </span>
+        </p>
+        <!-- キャンセルボタン -->
+        <form method="POST" action="{{route('reserve.cancel')}}">
+          @csrf
+          <input type="hidden" name="cancel_date" id="cancel-date">
+          <input type="hidden" name="cancel_part" id="cancel-part">
+          <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('こちらの予約をキャンセルしてもよろしいでしょうか?')">予約キャンセル</button>
+        </form>
+        <button type="button" class="btn btn-secondary js-modal-close mt-2">閉じる</button>
+      </div>
+    </div>
+  </div>
+
 </x-sidebar>

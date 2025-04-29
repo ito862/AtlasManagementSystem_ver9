@@ -9,7 +9,7 @@ use App\Models\Calendars\ReserveSettings;
 use App\Models\Calendars\Calendar;
 use App\Models\USers\User;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class CalendarController extends Controller
 {
@@ -36,5 +36,23 @@ class CalendarController extends Controller
             DB::rollback();
         }
         return redirect()->route('calendar.general.show', ['user_id' => Auth::id()]);
+    }
+
+    // 予約キャンセル
+    public function cancel(Request $request)
+    {
+        $date = $request->input('cancel_date');
+        $part = $request->input('cancel_part');
+        $userId = Auth::user()->id;
+        // 予約枠取得
+        $reserveSetting = ReserveSettings::whereDate('setting_reserve', $date)
+            ->where('setting_part', $part)
+            ->first();
+
+        if ($reserveSetting) {
+            $reserveSetting->users()->detach($userId);
+        }
+
+        return redirect()->route('calendar.general');
     }
 }
