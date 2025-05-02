@@ -3,7 +3,7 @@
     <div class="w-50 m-auto h-75">
       <p><span> {{ $date }} </span><span class="ml-3"> {{ $part }} 部</span></p>
       <div class="h-75 border">
-        <table class="">
+        <table class="w-100">
           <tr class="text-center" style="background-color:#04AAD2; color:#fff;">
             <th class="w-25">ID</th>
             <th class="w-25">名前</th>

@@ -26,6 +26,7 @@ li {
 
 .main-container {
   width: 100%;
+  background-color: #ECF1F6;
 }
 
 .sidebar p a {
@@ -50,6 +51,20 @@ li {
 .day-sun {
   color: #FF0000;
 }
+
+.calendar td a {
+  color: #212529;
+}
+
+.calendar td.day-sat a {
+  color: #0000FF;
+}
+
+.calendar td.day-sun a {
+  color: #FF0000;
+}
+
+
 
 .past-day {
   background: #EEE;
@@ -79,6 +94,10 @@ li {
 .adjust-table-btn {
   width: 70%;
 }
+
+/* .text-center th:nth-child(1) {
+  margin-right: 40px;
+} */
 
 /* モーダル */
 .modal {
@@ -318,8 +337,8 @@ li {
   height: 80vh;
   overflow: scroll;
   padding: 10px;
-  background: #FFF;
   border-radius: 5px;
+  gap: 0.8rem;
 }
 
 .reserve_users_area span {
@@ -329,10 +348,24 @@ li {
 .one_person {
   width: 250px;
   height: 250px;
+  background-color: #FFF;
+  border-radius: 10px;
+}
+
+.user_detail {
+  margin: 20px 0 15px 20px;
+}
+
+.user_detail div {
+  margin-bottom: 5px;
 }
 
 .search_conditions span {
   cursor: pointer;
+}
+
+.search_container {
+  margin: 10px 0 10px 15px;
 }
 
 .search_conditions_inner {

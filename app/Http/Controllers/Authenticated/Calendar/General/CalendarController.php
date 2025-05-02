@@ -51,6 +51,8 @@ class CalendarController extends Controller
 
         if ($reserveSetting) {
             $reserveSetting->users()->detach($userId);
+            // 予約枠を戻す
+            $reserveSetting->increment('limit_users');
         }
 
         return redirect()->route('calendar.general');

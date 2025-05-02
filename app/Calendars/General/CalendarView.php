@@ -31,8 +31,8 @@ class CalendarView
     $html[] = '<th>水</th>';
     $html[] = '<th>木</th>';
     $html[] = '<th>金</th>';
-    $html[] = '<th>土</th>';
-    $html[] = '<th>日</th>';
+    $html[] = '<th class="day-sat">土</th>';
+    $html[] = '<th class="day-sun">日</th>';
     $html[] = '</tr>';
     $html[] = '</thead>';
     $html[] = '<tbody>';
@@ -47,8 +47,18 @@ class CalendarView
         $isCurrentMonth = $dayDate->format('y-m') === $this->carbon->format('y-m');
         // 今日より後なら過去日とする
         $isPast = $dayDate->lt(Carbon::today());
+        // 曜日を取得
+        $dayOfWeek = $dayDate->dayOfWeek;
         // 背景色の設定
         $tdClass = 'calendar-td ' . $day->getClassName();
+        $dayClass = '';
+
+        if ($dayOfWeek === 0) {
+          $dayClass .= 'day-sun';
+        } elseif ($dayOfWeek === 6) {
+          $dayClass .= 'day-sat';
+        }
+
         if (!$isCurrentMonth) {
           $tdStyle = 'background-color: #ccc';
         } elseif ($isPast) {

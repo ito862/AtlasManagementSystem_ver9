@@ -31,8 +31,8 @@ class CalendarSettingView
     $html[] = '<th class="border">水</th>';
     $html[] = '<th class="border">木</th>';
     $html[] = '<th class="border">金</th>';
-    $html[] = '<th class="border">土</th>';
-    $html[] = '<th class="border">日</th>';
+    $html[] = '<th class="border day-sat">土</th>';
+    $html[] = '<th class="border day-sun">日</th>';
     $html[] = '</tr>';
     $html[] = '</thead>';
     $html[] = '<tbody>';
@@ -45,11 +45,22 @@ class CalendarSettingView
         $startDay = $this->carbon->format("Y-m-01");
         $toDay = $this->carbon->format("Y-m-d");
 
-        if ($startDay <= $day->everyDay() && $toDay >= $day->everyDay()) {
-          $html[] = '<td class="past-day border">';
-        } else {
-          $html[] = '<td class="border ' . $day->getClassName() . '">';
+        $dayDate = new Carbon($day->everyDay());
+        $dayOfWeek = $dayDate->dayOfWeek;
+
+        $dayClass = '';
+        if ($dayOfWeek === 0) {
+          $dayClass = 'day-sun';
+        } elseif ($dayOfWeek === 6) {
+          $dayClass = 'day-sat';
         }
+
+        if ($startDay <= $day->everyDay() && $toDay >= $day->everyDay()) {
+          $html[] = '<td class="past-day border ' . $dayClass . '">';
+        } else {
+          $html[] = '<td class="border ' . $day->getClassName() . ' ' . $dayClass . '">';
+        }
+
         $html[] = $day->render();
         $html[] = '<div class="adjust-area">';
         if ($day->everyDay()) {
