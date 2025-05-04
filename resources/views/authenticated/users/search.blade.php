@@ -1,6 +1,6 @@
 <x-sidebar>
   <!-- ユーザー表示 -->
-  <div class="search_content w-100 border d-flex">
+  <div class="search_content w-100 vh-100 border d-flex">
     <div class="reserve_users_area">
       @foreach($users as $user)
       <div class="border one_person">
@@ -54,64 +54,69 @@
     </div>
     <!-- 検索機能 -->
     <div class="search_area w-25 border">
-      <h3>検索</h3>
-      <form action="{{ route('user.search') }}" method="get" id="userSearchRequest">
-        <div class="search_container">
-          <div>
-            <input type="text" class="free_word" name="keyword" placeholder="キーワードを検索" form="userSearchRequest">
-          </div>
-          <div>
-            <label>カテゴリ</label>
-            <select form="userSearchRequest" name="category">
-              <option value="name">名前</option>
-              <option value="id">社員ID</option>
-            </select>
-          </div>
-          <div>
-            <label>並び替え</label>
-            <select name="updown" form="userSearchRequest">
-              <option value="ASC">昇順</option>
-              <option value="DESC">降順</option>
-            </select>
-          </div>
+      <div class="search_detail">
+        <h3 class="search_items">検索</h3>
+        <form action="{{ route('user.search') }}" method="get" id="userSearchRequest">
+          <div class="search_container">
+            <div>
+              <input type="text" class="free_word" name="keyword" placeholder="キーワードを検索" form="userSearchRequest">
+            </div>
+            <div>
+              <label class="search_items">カテゴリ</label>
+              <select class="category_select" form="userSearchRequest" name="category">
+                <option value="name">名前</option>
+                <option value="id">社員ID</option>
+              </select>
+            </div>
+            <div>
+              <label class="search_items">並び替え</label>
+              <select class="updown_select" name="updown" form="userSearchRequest">
+                <option value="ASC">昇順</option>
+                <option value="DESC">降順</option>
+              </select>
+            </div>
 
-          <!-- 検索条件の追加 -->
-          <div class="">
-            <p class="m-0 search_conditions"><span>検索条件の追加</span></p>
-            <div class="search_conditions_inner">
-              <div>
-                <label>性別</label>
-                <span>男</span><input type="radio" name="sex" value="1" form="userSearchRequest">
-                <span>女</span><input type="radio" name="sex" value="2" form="userSearchRequest">
-                <span>その他</span><input type="radio" name="sex" value="3" form="userSearchRequest">
-              </div>
-              <div>
-                <label>権限</label>
-                <select name="role" form="userSearchRequest" class="engineer">
-                  <option selected disabled>----</option>
-                  <option value="1">教師(国語)</option>
-                  <option value="2">教師(数学)</option>
-                  <option value="3">教師(英語)</option>
-                  <option value="4" class="">生徒</option>
-                </select>
-              </div>
-              <div class="selected_engineer">
-                <label>選択科目</label>
-                <span>国語</span><input type="checkbox" name="subject[]" value="1" form="userSearchRequest">
-                <span>数学</span><input type="checkbox" name="subject[]" value="2" form="userSearchRequest">
-                <span>英語</span><input type="checkbox" name="subject[]" value="3" form="userSearchRequest">
+            <!-- 検索条件の追加 -->
+            <div class="">
+              <p class="m-0 search_conditions">
+                <span class="search_items">検索条件の追加</span>
+                <span class="arrow-icon">&#8250;</span>
+              </p>
+              <div class="search_conditions_inner">
+                <div>
+                  <label class="search_items">性別</label>
+                  <span>男</span><input type="radio" name="sex" value="1" form="userSearchRequest">
+                  <span>女</span><input type="radio" name="sex" value="2" form="userSearchRequest">
+                  <span>その他</span><input type="radio" name="sex" value="3" form="userSearchRequest">
+                </div>
+                <div>
+                  <label class="search_items">権限</label>
+                  <select name="role" form="userSearchRequest" class="engineer">
+                    <option selected disabled>----</option>
+                    <option value="1">教師(国語)</option>
+                    <option value="2">教師(数学)</option>
+                    <option value="3">教師(英語)</option>
+                    <option value="4" class="">生徒</option>
+                  </select>
+                </div>
+                <div class="selected_engineer">
+                  <label class="search_items">選択科目</label>
+                  <span>国語</span><input type="checkbox" name="subject[]" value="1" form="userSearchRequest">
+                  <span>数学</span><input type="checkbox" name="subject[]" value="2" form="userSearchRequest">
+                  <span>英語</span><input type="checkbox" name="subject[]" value="3" form="userSearchRequest">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <input type="reset" value="リセット" form="userSearchRequest">
-        </div>
-        <div>
-          <input type="submit" name="search_btn" value="検索" form="userSearchRequest">
-        </div>
+          <div>
+            <input class="search_button" class="search_button" type="submit" name="search_btn" value="検索" form="userSearchRequest">
+          </div>
+          <div>
+            <input class="reset_button" type="reset" value="リセット" form="userSearchRequest">
+          </div>
+      </div>
+      </form>
     </div>
-    </form>
   </div>
   </div>
 </x-sidebar>
