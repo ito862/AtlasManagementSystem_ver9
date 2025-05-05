@@ -1,12 +1,12 @@
 <x-guest-layout>
   <form action="{{ route('registerPost') }}" method="POST">
-    <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center;">
-      <div class="w-25 vh-75 border p-3">
+    <div class="w-100 vh-100 d-flex" style="align-items:center; justify-content:center; background-color: #ECF1F6;">
+      <div class="w-25 vh-75 border p-3" style="background-color:#FFF; border-radius: 10px;">
         <div class="register_form">
           <div class="d-flex mt-3" style="justify-content:space-between">
             <div class="" style="width:140px">
               @if ($errors->has('over_name'))
-              <div class="text-red-500">
+              <div class="text_red">
                 {{ $errors->first('over_name') }}
               </div>
               @endif
@@ -17,7 +17,7 @@
             </div>
             <div class="" style="width:140px">
               @if ($errors->has('under_name'))
-              <div class="text-red-500">
+              <div class="text_red">
                 {{ $errors->first('under_name') }}
               </div>
               @endif
@@ -30,7 +30,7 @@
           <div class="d-flex mt-3" style="justify-content:space-between">
             <div class="" style="width:140px">
               @if ($errors->has('over_name_kana'))
-              <div class="text-red-500">
+              <div class="text_red">
                 {{ $errors->first('over_name_kana') }}
               </div>
               @endif
@@ -41,7 +41,7 @@
             </div>
             <div class="" style="width:140px">
               @if ($errors->has('under_name_kana'))
-              <div class="text-red-500">
+              <div class="text_red">
                 {{ $errors->first('under_name_kana') }}
               </div>
               @endif
@@ -53,7 +53,7 @@
           </div>
           <div class="mt-3">
             @if ($errors->has('mail_address'))
-            <div class="text-red-500">
+            <div class="text_red">
               {{ $errors->first('mail_address') }}
             </div>
             @endif
@@ -65,7 +65,7 @@
         </div>
         <div class="mt-3">
           @if ($errors->has('sex'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('sex') }}
           </div>
           @endif
@@ -78,17 +78,17 @@
         </div>
         <div class="mt-3">
           @if ($errors->has('old_year'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('old_year') }}
           </div>
           @endif
           @if ($errors->has('old_month'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('old_month') }}
           </div>
           @endif
           @if ($errors->has('old_day'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('old_day') }}
           </div>
           @endif
@@ -177,7 +177,7 @@
         </div>
         <div class="mt-3">
           @if ($errors->has('role'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('role') }}
           </div>
           @endif
@@ -202,7 +202,7 @@
         </div>
         <div class="mt-3">
           @if ($errors->has('password'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('password') }}
           </div>
           @endif
@@ -221,7 +221,7 @@
           <input type="submit" class="btn btn-primary register_btn" disabled value="新規登録" onclick="return confirm('登録してよろしいですか？')">
         </div>
         <div class="text-center">
-          <a href="{{ route('loginView') }}">ログイン</a>
+          <a href="{{ route('loginView') }}">ログインはこちら</a>
         </div>
       </div>
       {{ csrf_field() }}

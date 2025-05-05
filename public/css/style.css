@@ -16,6 +16,21 @@ li {
   list-style: none;
 }
 
+.atlas_logo {
+  position: relative;
+  top: 180px;
+  left: 40%;
+}
+
+.login_form {
+  background-color: #FFF;
+  border-radius: 10px;
+}
+
+.text_red {
+  color: #D9544C;
+}
+
 /* サイドバー */
 .sidebar {
   width: 200px;
@@ -73,6 +88,9 @@ li {
   color: #FF0000;
 }
 
+.day {
+  margin-bottom: -3px;
+}
 
 
 .past-day {
@@ -93,7 +111,7 @@ li {
 
 .calendar_back {
   width: 85%;
-  height: 90%;
+  height: 100%;
   background-color: #fff;
   border-radius: 15px;
 }
@@ -153,7 +171,8 @@ li {
 .cancel_detail {
   font-size: 24px;
   display: flex;
-  margin: 30px 0 100px 0;
+  flex-flow: column;
+  margin: 30px 0 70px 0;
 }
 
 .modal_buttons {
@@ -473,7 +492,7 @@ li {
 .reserve_users_area {
   display: flex;
   flex-wrap: wrap;
-  width: 800px;
+  width: 1100px;
   margin: 10px auto;
   height: 80vh;
   overflow: scroll;
@@ -487,8 +506,8 @@ li {
 }
 
 .one_person {
-  width: 250px;
-  height: 250px;
+  width: 230px;
+  height: 230px;
   background-color: #FFF;
   border-radius: 10px;
 }
