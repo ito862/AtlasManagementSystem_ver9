@@ -20,7 +20,7 @@ class PostsController extends Controller
 {
     public function show(Request $request)
     {
-        $posts = Post::with('user', 'postComments')->get();
+        $posts = Post::with('user', 'postComments', 'subCategories')->get();
         $categories = MainCategory::get();
         $like = new Like;
         $post_comment = new Post;
@@ -30,9 +30,9 @@ class PostsController extends Controller
             $subCategory = SubCategory::where('sub_category', $request->keyword)->first();
 
             if ($subCategory) {
-                $posts = $subCategory->posts()->with('user', 'postComments')->get();
+                $posts = $subCategory->posts()->with('user', 'postComments', 'subCategories')->get();
             } else {
-                $posts = Post::with('user', 'postComments')
+                $posts = Post::with('user', 'postComments', 'subCategories')
                     ->where('post_title', 'like', '%' . $request->keyword . '%')
                     ->orWhere('post', 'like', '%' . $request->keyword . '%')
                     ->get();
@@ -42,21 +42,21 @@ class PostsController extends Controller
             $subCategory = SubCategory::where('sub_category', $request->category_word)->first();
 
             if ($subCategory) {
-                $posts = $subCategory->posts()->with('user', 'postComments')->get();
+                $posts = $subCategory->posts()->with('user', 'postComments', 'subCategories')->get();
             }
         } elseif ($request->filled('like_posts')) {
             //いいねした投稿
             $likes = Auth::user()->likePostId()->pluck('like_post_id');
-            $posts = Post::with('user', 'postComments')
+            $posts = Post::with('user', 'postComments', 'subCategories')
                 ->whereIn('id', $likes)
                 ->get();
         } elseif ($request->filled('my_posts')) {
             //自分の投稿
-            $posts = Post::with('user', 'postComments')
+            $posts = Post::with('user', 'postComments', 'subCategories')
                 ->where('user_id', Auth::id())
                 ->get();
         } else {
-            $posts = Post::with('user', 'postComments')->get();
+            $posts = Post::with('user', 'postComments', 'subCategories')->get();
         }
 
         return view('authenticated.bulletinboard.posts', compact('posts', 'categories', 'like', 'post_comment'));

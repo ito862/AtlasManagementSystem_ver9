@@ -230,7 +230,7 @@ li {
 
 .error_message {
   font-size: 12px;
-  color: red;
+  color: #D9544C;
 }
 
 /* アコーディオン */
@@ -360,6 +360,19 @@ li {
 
 .edit-modal-btn {
   justify-content: space-between;
+}
+
+.subcategory {
+  height: 26px;
+  width: fit-content;
+  text-align: center;
+  color: #fff;
+  background-color: #03AAD2;
+  border-radius: 5px;
+}
+
+.subcategory span {
+  margin: 0 5px 0 5px;
 }
 
 /* 掲示板 コメント */
