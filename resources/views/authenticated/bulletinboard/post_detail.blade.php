@@ -4,7 +4,7 @@
       <div class="m-3 detail_container">
         <div class="p-3">
           <div class="detail_inner_head">
-            <div>
+            <div class="d-flex">
               @foreach($post->subCategories as $subCategory)
               <P class="subcategory"><span>{{ $subCategory->sub_category }}</span></P>
               @endforeach
