@@ -8,6 +8,16 @@
               @foreach($post->subCategories as $subCategory)
               <P class="subcategory"><span>{{ $subCategory->sub_category }}</span></P>
               @endforeach
+              @if ($errors->has('post_title'))
+              <div class="text_red">
+                {{ $errors->first('post_title') }}
+              </div>
+              @endif
+              @if ($errors->has('post_body'))
+              <div class="text_red">
+                {{ $errors->first('post_body') }}
+              </div>
+              @endif
             </div>
             <div>
               @if(Auth::id() === $post->user->id)
@@ -66,19 +76,9 @@
     <div class="modal__content">
       <form action="{{ route('post.edit') }}" method="post">
         <div class="w-100">
-          @if ($errors->has('post_title'))
-          <div class="text_red">
-            {{ $errors->first('post_title') }}
-          </div>
-          @endif
           <div class="modal-inner-title w-50 m-auto">
             <input type="text" name="post_title" placeholder="タイトル" class="w-100">
           </div>
-          @if ($errors->has('post_body'))
-          <div class="text_red">
-            {{ $errors->first('post_body') }}
-          </div>
-          @endif
           <div class="modal-inner-body w-50 m-auto pt-3 pb-3">
             <textarea placeholder="投稿内容" name="post_body" class="w-100"></textarea>
           </div>
