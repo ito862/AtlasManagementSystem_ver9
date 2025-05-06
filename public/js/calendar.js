@@ -7,7 +7,7 @@ $(function () {
 
     // 表示部分
     $('#modal-date').text(date);
-    $('#modal-part').text(part + '部');
+    $('#modal-part').text('リモ' + part + '部');
     // 送信用
     $('#cancel-date').val(date);
     $('#cancel-part').val(part);

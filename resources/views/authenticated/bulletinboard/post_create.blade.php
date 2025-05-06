@@ -40,7 +40,7 @@
           <form action="{{ route('main.category.create') }}" method="post" id="mainCategoryRequest">
             @csrf
             @if ($errors->has('main_category_name'))
-            <div class="text-red-500">
+            <div class="text_red">
               {{ $errors->first('main_category_name') }}
             </div>
             @endif
@@ -54,7 +54,7 @@
           <form action="{{ route('sub.category.create') }}" method="post" id="subCategoryRequest">
             @csrf
             @if ($errors->has('sub_category_name'))
-            <div class="text-red-500">
+            <div class="text_red">
               {{ $errors->first('sub_category_name') }}
             </div>
             @endif

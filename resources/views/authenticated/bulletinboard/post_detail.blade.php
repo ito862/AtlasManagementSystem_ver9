@@ -5,6 +5,9 @@
         <div class="p-3">
           <div class="detail_inner_head">
             <div>
+              @foreach($post->subCategories as $subCategory)
+              <P class="subcategory"><span>{{ $subCategory->sub_category }}</span></P>
+              @endforeach
             </div>
             <div>
               @if(Auth::id() === $post->user->id)
@@ -42,11 +45,11 @@
       </div>
     </div>
     <div class="w-50 p-3">
-      @if ($errors->has('comment'))
-      <div class="text-red-500">{{ $errors->first('comment') }}</div>
-      @endif
       <div class="comment_container border m-5">
         <div class="comment_area p-3">
+          @if ($errors->has('comment'))
+          <div class="text_red">{{ $errors->first('comment') }}</div>
+          @endif
           <p class="m-0">コメントする</p>
           <form action="{{ route('comment.create') }}" method="post" id="commentRequest">
             {{ csrf_field() }}
@@ -64,7 +67,7 @@
       <form action="{{ route('post.edit') }}" method="post">
         <div class="w-100">
           @if ($errors->has('post_title'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('post_title') }}
           </div>
           @endif
@@ -72,7 +75,7 @@
             <input type="text" name="post_title" placeholder="タイトル" class="w-100">
           </div>
           @if ($errors->has('post_body'))
-          <div class="text-red-500">
+          <div class="text_red">
             {{ $errors->first('post_body') }}
           </div>
           @endif

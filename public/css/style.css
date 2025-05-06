@@ -17,9 +17,10 @@ li {
 }
 
 .atlas_logo {
+  width: 15%;
   position: relative;
   top: 180px;
-  left: 40%;
+  left: 42%;
 }
 
 .login_form {
@@ -28,6 +29,8 @@ li {
 }
 
 .text_red {
+  font-size: 8px;
+  white-space: nowrap;
   color: #D9544C;
 }
 
@@ -169,24 +172,36 @@ li {
 }
 
 .cancel_detail {
-  font-size: 24px;
+  font-size: 18px;
   display: flex;
   flex-flow: column;
-  margin: 30px 0 70px 0;
+}
+
+.cancel_detail p {
+  position: relative;
+  top: 50px;
+  left: 16%;
 }
 
 .modal_buttons {
   display: flex;
   margin: auto;
-  justify-content: space-between;
 }
 
 .cancel_button {
   display: inline-block;
+  width: 160px;
+  position: relative;
+  top: 50px;
+  left: 100%;
 }
 
 .close_button {
   display: inline-block;
+  width: 160px;
+  position: relative;
+  top: 50px;
+  left: 40%;
 }
 
 /* 掲示板 */
@@ -322,6 +337,11 @@ li {
   transform: translate(-50%, -50%);
   width: 60%;
   height: 350px;
+}
+
+
+.post_view {
+  overflow: scroll;
 }
 
 /* 掲示板 詳細画面 */
